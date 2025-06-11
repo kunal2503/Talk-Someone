@@ -1,1 +1,22 @@
 @import "tailwindcss";
+
+* {
+    scrollbar-width:thin !important;
+    scrollbar-color: #6366f1 #1f2937 !important;
+}
+
+/* Scrollbar styles for Webkit */
+*::-webkit-scrollbar {
+    width: 8px !important;
+    height: 8px !important;
+}
+
+*::-webkit-scrollbar-track {
+    background: #848c98 !important;
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: #6366f1 !important;
+    border-radius: 0px !important;
+    border: 3px solid #1f2937 !important;
+}

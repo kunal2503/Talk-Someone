@@ -25,8 +25,10 @@ export const SocketProvider = ({ children }) => {
     // Emit user-Online event on connect
     newSocket.on("connect", () => {
       newSocket.emit("user-Online", user.id);
+      // newSocket.emit("chat-message","Hello ghost");
       console.log("Socket connected and user-Online emitted");
     });
+
 
     // Handle tab/window close or unload to emit offline status
     const handleBeforeUnload = () => {

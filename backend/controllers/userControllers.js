@@ -13,9 +13,8 @@ exports.getAllUser = async (req, res) => {
 exports.getUserProfileInfo = async (req, res) => {
   try {
     const userId = req.params.userId;
-    // console.log(req.header);
-    // console.log(req);
     const userInfo = await User.findById(userId).select("-password");
+    
     res.json(userInfo);
   } catch (error) {
     res.status(500).json({ message: "Internal servel error" });

@@ -20,7 +20,7 @@ const UserProfilePage = () => {
       const response = await axiosInstance.get(`/api/users/userProfile/${userId}`);
       setUserData(response.data);
     } catch (error) {
-      toast.error("Internal server error");
+      toast.error("Internal server error",error);
     }
   };
 
@@ -107,6 +107,33 @@ const UserProfilePage = () => {
           </div>
         </div>
       </div>
+       <style>
+        {`
+          @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+          }
+
+          /* Scrollbar styles for Firefox */
+          * {
+            scrollbar-width: thin;
+            scrollbar-color: #6366f1 #1f2937;
+          }
+
+          /* Scrollbar styles for Webkit */
+          *::-webkit-scrollbar {
+            width: 8px;
+          }
+          *::-webkit-scrollbar-track {
+            background: #1f2937;
+          }
+          *::-webkit-scrollbar-thumb {
+            background-color: #6366f1;
+            border-radius: 20px;
+            border: 3px solid #1f2937;
+          }
+        `}
+      </style>
     </div>
   );
 };

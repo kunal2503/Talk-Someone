@@ -7,9 +7,8 @@ const mongoose = require("mongoose");
 const authRoutes = require("./routes/authRoutes")
 const userRoutes = require("./routes/userRoutes");
 const friendRoutes = require("./routes/friendRoutes");
-// const messageRoute = require("./routes/messageRoutes");
+const messageRoutes = require("./routes/messageRoutes");
 const socketHandler = require("./socket");
-const { url } = require("inspector");
 
 
 
@@ -20,6 +19,7 @@ const io = socketIo(server,{
     origin : "*",
   },
 });
+
 
 
 app.use(cors({
@@ -40,7 +40,7 @@ app.use(express.urlencoded({extended:true}))
 app.use("/api/auth",authRoutes);
 app.use("/api/users",userRoutes);
 app.use("/api/user-friends",friendRoutes);
-// app.use("/api/message",messageRoute);
+app.use("/api/messages", messageRoutes);
 
 
 connect()
@@ -60,6 +60,5 @@ app.get("/",(req,res)=>{
 const port = process.env.PORT || 3000;
 
 server.listen(port,()=>{
-  // console.log(server)
     console.log(`Server is runing on port ${port} `);
 })

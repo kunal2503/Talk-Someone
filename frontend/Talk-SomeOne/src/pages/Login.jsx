@@ -19,15 +19,13 @@ const Login = () => {
       localStorage.setItem("user", JSON.stringify(response.data.user));
 
       if (response.data.user && response.data.user.id) {
-        localStorage.setItem("userId", response.data.user.id); // Store user ID in localStorage
+        localStorage.setItem("userId", response.data.user.id);
       }
 
-      toast.success("Login Successfull !", {
-        autoClose: 1000,
-      });
-      navigate(`/`)
+      toast.success("Login Successful!", { autoClose: 1000 });
+      navigate(`/`);
     } catch (error) {
-      console.log(error)
+      console.error(error);
       toast.error(error.response?.data?.message || "Login Failed", {
         autoClose: 1000,
       });
@@ -37,52 +35,75 @@ const Login = () => {
   const handleChanges = (e) => {
     setform({ ...form, [e.target.name]: e.target.value });
   };
+
   return (
-    <>
-      <div className="min-h-screen min-w-screen flex items-center justify-center bg-gray-200">
-        <div className="flex flex-col items-center justify-center bg-gray-100 shadow-md border-gray-200 rounded-lg p-8 w-full max-w-sm">
-          <h1 className="text-gray-800 text-2xl font-bold text-center mb-6">
-            Login
-          </h1>
-          <form onSubmit={handleLogin} className="flex flex-col gap-1">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-200 to-gray-300 px-4">
+      <div className="w-full max-w-sm bg-white rounded-2xl shadow-xl p-8 space-y-6">
+        <h2 className="text-center text-3xl font-bold text-gray-800">
+          Welcome Back 👋
+        </h2>
+        <p className="text-center text-sm text-gray-500">
+          Login to your account to continue
+        </p>
+
+        <form onSubmit={handleLogin} className="space-y-4">
+          {/* Email */}
+          <div>
+            <label className="block text-sm text-gray-600 mb-1" htmlFor="email">Email</label>
             <input
+            id="email"
               type="email"
               name="email"
               value={form.email}
               onChange={handleChanges}
-              placeholder="Enter Username or Email"
-              className="rounded-full py-2 px-4 pr-10 mb-3 focus:outline-none border border-gray-600 w-full focus:ring-1 focus:ring-black"
+              placeholder="example@email.com"
+              className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
               required
             />
+          </div>
+
+          {/* Password */}
+          <div>
+            <label className="block text-sm text-gray-600 mb-1" htmlFor="password">Password</label>
             <PasswordInput
+              id="password"
               value={form.password}
               onChange={handleChanges}
-              name={"password"}
+              name="password"
             />
-            <a
-              className="flex flex-row justify-end text-sm mt-0 mb-4 text-blue-500 font-medium "
-              href="/forget-password"
-            >
-              Forget Password
-            </a>
-            <button className="bg-blue-500 hover:bg-blue-600 hover:rounded-full rounded-md transition-all duration-300   text-white font-semibold py-2  ">
-              Login
-            </button>
-          </form>
-          <div>
-            <span>Don`t have an account</span>
-            {/* <a href="/signup" className="text-blue-500 hover:text-blue-600 font-medium mt-4"> Register</a> */}
-            <button
-              onClick={() => navigate("/signup")}
-              className="text-blue-500 hover:text-blue-600 font-medium mt-4"
-            >
-              {" "}
-              Register
-            </button>
           </div>
-        </div>
+
+          {/* Forgot Link */}
+          <div className="flex justify-end text-sm">
+            <a
+              href="/forget-password"
+              className="text-blue-600 hover:underline hover:text-blue-700 transition"
+            >
+              Forgot Password?
+            </a>
+          </div>
+
+          {/* Login Button */}
+          <button
+            type="submit"
+            className="w-full py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold transition duration-300"
+          >
+            Login
+          </button>
+        </form>
+
+        {/* Divider */}
+        <div className="text-sm text-center text-gray-500">Don’t have an account?</div>
+
+        {/* Register Button */}
+        <button
+          onClick={() => navigate("/signup")}
+          className="w-full py-2 border border-blue-600 text-blue-600 rounded-lg hover:bg-blue-50 transition"
+        >
+          Register
+        </button>
       </div>
-    </>
+    </div>
   );
 };
 
