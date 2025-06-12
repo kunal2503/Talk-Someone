@@ -9,11 +9,11 @@ import ChatNavbar from "./ChatNavbar";
 
 const Chats = () => {
   const [users, setUsers] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTermUsers, setSearchTermUsers] = useState("");
+  const [searchTermMessage, setSearchTermMessage] = useState("");
   const [selectedUser, setSelectedUser] = useState(null);
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
-  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
   const messagesEndRef = useRef(null);
@@ -71,7 +71,6 @@ const Chats = () => {
   };
 
   const getUsers = async () => {
-    setLoading(true);
     try {
       const response = await axiosInstace.get("/api/users/friends");
       const filtered = response.data.filter(
@@ -81,12 +80,10 @@ const Chats = () => {
           user.friends.includes(currentUser?.id)
       );
       setUsers(filtered);
-      console.log("id",currentUser)
+      // console.log("id",currentUser)
     } catch (error) {
-      console.error(error);
-      toast.error("Failed to load friends");
-    } finally {
-      setLoading(false);
+      // console.error(error);
+      toast.error("Failed to load friends",error);
     }
   };
 
@@ -144,18 +141,18 @@ const Chats = () => {
   const filteredUsers = 
       users.filter(
         (user) =>
-          user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          user.email.toLowerCase().includes(searchTerm.toLowerCase())
+          user.name.toLowerCase().includes(searchTermUsers.toLowerCase()) ||
+          user.email.toLowerCase().includes(searchTermUsers.toLowerCase())
       
     );
-    console.log(users)
+    // console.log(users)
 
   const searchMessage = useMemo(
     () =>
       messages.filter((msg) =>
-        msg.message.toLowerCase().includes(searchTerm.toLowerCase())
+        msg.message.toLowerCase().includes(searchTermMessage.toLowerCase())
       ),
-    [messages, searchTerm]
+    [messages, searchTermMessage]
   );
 
   return (
@@ -163,8 +160,8 @@ const Chats = () => {
       <ChatSideBar
         filteredUsers={filteredUsers}
         selectedUser={selectedUser}
-        searchTerm={searchTerm}
-        setSearchTerm={setSearchTerm}
+        searchTerm={searchTermUsers}
+        setSearchTerm={setSearchTermUsers}
         handleUser={handleUser}
         handleOnClick={handleOnClick}
         searchMessage={searchMessage}
@@ -179,11 +176,11 @@ const Chats = () => {
               setSelectedUser={setSelectedUser}
               formatLastSeen={formatLastSeen}
               handleOnClick={handleOnClick}
-              searchTerm={searchTerm}
-              setSearchTerm={setSearchTerm}
+              searchTerm={searchTermMessage}
+              setSearchTerm={setSearchTermMessage}
             />
 
-            <div className="flex-1 overflow-y-auto p-6 space-y-3 scrollbar-thin scrollbar-thumb-indigo-600 scrollbar-track-gray-800">
+            <div className="flex-1 overflow-y-auto space-y-3 pr-2 scroll-smooth scrollbar-thin scrollbar-thumb-indigo-600 scrollbar-track-indigo-800">
               {searchMessage.length > 0 ? (
                 searchMessage.map((msg) => (
                   <div
@@ -214,7 +211,7 @@ const Chats = () => {
                     </div>
                   </div>
                 ))
-              ) : messages.length > 0 && searchTerm ? (
+              ) : messages.length > 0 && searchTermMessage ? (
                 <p className="text-center text-gray-500 italic mt-10">
                   No matches found.
                 </p>

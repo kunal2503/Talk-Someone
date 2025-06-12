@@ -40,7 +40,7 @@ const ChatSideBar = ({
           <div
             key={user._id}
             onClick={() => handleUser(user)}
-            className={`cursor-pointer flex items-center justify-between p-4 rounded-lg mb-2 transition 
+            className={`cursor-pointer flex items-center justify-between p-4 rounded-lg mb-2 transition flex-1 overflow-y-auto  scroll-smooth scrollbar-thin scrollbar-thumb-indigo-600 scrollbar-track-indigo-800
               ${
                 selectedUser?._id === user._id
                   ? 'bg-indigo-700 shadow-lg'
